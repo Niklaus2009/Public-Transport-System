@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Available Routes</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Available Routes</h1>
+
+        {% if routes %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Start</th>
+                            <th>Destination</th>
+                            <th>Bus Number</th>
+                            <th>Capacity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for route in routes %}
+                            <tr>
+                                <td>{{ route.route_name }}</td>
+                                <td>{{ route.start_point }}</td>
+                                <td>{{ route.end_point }}</td>
+                                <td>{{ route.bus_number or 'No bus assigned' }}</td>
+                                <td>{{ route.capacity if route.capacity is not none else '-' }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>No routes have been added yet.</p>
+        {% endif %}
+
+        <p><a href="/user">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Public Transport System</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <p>Sign in to your transport account.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password"
+                       name="password" required>
+            </div>
+
+            <button class="btn" type="submit">Login</button>
+        </form>
+
+        <p>New passenger?
+            <a href="{{ url_for('register') }}">Create an account</a>
+        </p>
+
+        <p><a href="/">Back to Home</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Bookings</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>My Bookings</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        {% if bookings %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Date</th>
+                            <th>Route</th>
+                            <th>Journey</th>
+                            <th>Bus</th>
+                            <th>Seat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.ticket_id }}</td>
+                                <td>{{ booking.travel_date }}</td>
+                                <td>{{ booking.route_name }}</td>
+                                <td>{{ booking.start_point }} to {{ booking.end_point }}</td>
+                                <td>{{ booking.bus_number }}</td>
+                                <td>{{ booking.seat_number }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>You have not booked any tickets yet.</p>
+        {% endif %}
+
+        <p><a href="/user">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>

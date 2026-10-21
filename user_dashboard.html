@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Passenger Dashboard</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Passenger Dashboard</h1>
+        <p>Welcome, {{ session.email }}</p>
+
+        <div class="dashboard">
+            <a class="dashboard-card" href="/user/routes">
+                <h2>View Routes</h2>
+                <p>Explore available transport routes.</p>
+            </a>
+
+            <a class="dashboard-card" href="/user/book">
+                <h2>Book a Ticket</h2>
+                <p>Select a bus, date and seat.</p>
+            </a>
+
+            <a class="dashboard-card" href="/user/bookings">
+                <h2>My Bookings</h2>
+                <p>View your tickets.</p>
+            </a>
+        </div>
+
+        <form method="POST" action="/logout" class="logout-form">
+            <button class="btn danger" type="submit">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ mode }} {{ config.title }}</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ mode }} {{ config.title }}</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST"
+              action="{% if mode == 'Edit' %}{{ url_for('edit_record', entity=entity, record_id=record[config.pk]) }}{% else %}{{ url_for('add_record', entity=entity) }}{% endif %}">
+
+            {% for field, label, field_type in config.fields %}
+                <div class="form-group">
+                    <label for="{{ field }}">{{ label }}</label>
+
+                    {% if field_type in ['route', 'passenger', 'bus'] %}
+                        <select id="{{ field }}" name="{{ field }}" required>
+                            <option value="">-- Select {{ label }} --</option>
+
+                            {% for option in options[field] %}
+                                <option value="{{ option[0] }}"
+                                    {% if record.get(field)|string == option[0]|string %}selected{% endif %}>
+                                    {{ option[1] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                    {% else %}
+                        <input
+                            type="{{ field_type }}"
+                            id="{{ field }}"
+                            name="{{ field }}"
+                            value="{{ record.get(field, '') or '' }}"
+                            {% if field_type == 'number' %}min="1" step="1"{% endif %}
+                            required
+                        >
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn">
+                {{ mode }} Record
+            </button>
+
+            <a class="btn secondary"
+               href="{{ url_for('list_records', entity=entity) }}">
+                Cancel
+            </a>
+        </form>
+
+        <p><a href="/">Back to Home</a></p>
+    </div>
+</body>
+</html>

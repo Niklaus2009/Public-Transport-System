@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Public Transport System</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Public Transport Management System</h1>
+        <p class="subtitle">
+            Welcome! Choose the portal you want to access.
+        </p>
+
+        <div class="dashboard">
+            <a class="dashboard-card" href="/login">
+                <h2>Admin / User Login</h2>
+                <p>Sign in to your account. Your role determines your portal.</p>
+            </a>
+
+            <a class="dashboard-card" href="/register">
+                <h2>Passenger Registration</h2>
+                <p>Create a new passenger account to book tickets.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

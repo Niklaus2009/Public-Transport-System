@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Ticket</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Book a Ticket</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        {% if buses %}
+            <form method="POST">
+                <div class="form-group">
+                    <label for="bus_id">Choose Bus</label>
+                    <select id="bus_id" name="bus_id" required>
+                        <option value="">-- Select Bus --</option>
+                        {% for bus in buses %}
+                            <option value="{{ bus.bus_id }}">
+                                {{ bus.bus_number }} —
+                                {{ bus.route_name }}:
+                                {{ bus.start_point }} to {{ bus.end_point }}
+                                (Capacity {{ bus.capacity }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="travel_date">Travel Date</label>
+                    <input type="date" id="travel_date"
+                           name="travel_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="seat_number">Seat Number</label>
+                    <input type="number" id="seat_number"
+                           name="seat_number" min="1" required>
+                </div>
+
+                <button class="btn" type="submit">Book Ticket</button>
+            </form>
+        {% else %}
+            <p>No buses are available for booking yet.</p>
+        {% endif %}
+
+        <p><a href="/user">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>
